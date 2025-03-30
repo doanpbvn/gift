@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#06c1db">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>iOS Tool Hub</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <script src="./giftsave.js" defer></script>
+    <link rel="stylesheet" type="text/css" id="stylesheet">
+</head>
+<body>
+  <main>
+    <div class="sessions">
+      <h2 style="text-align: center; margin: 10px; padding: 20px;">Trang KylaMart <br>---------------------<br> Nhập Gift Ca Ngày  </h2>
+        <div class="columns">
+          <label><input type="radio" name="data" value="gift_100" checked=""><img class="icon" style="width: 25px;" src="./image/gift.png">Gift 100</label><!-- Mặc định chọn -->
+          <label><input type="radio" name="data" value="gift_khac"><img class="icon" style="width: 25px;" src="./image/gift.png">Gift 200</label>
+          <label><input type="radio" name="data" value="gift_500"><img class="icon" style="width: 25px;" src="./image/gift.png">Gift 500 </label>
+          <label><input type="radio" name="data" value="gift_user"><img class="icon" style="width: 25px;" src="./image/gift.png">Check User</label>
+          <label><input type="radio" name="data" value="gift_1000"><img class="icon" style="width: 25px;" src="./image/gift.png">Gift 1000</label>
+        </div>
+    </div>
+    <div class="sessions">
+      <h3 style="text-align: center; padding: 10px;">Lưu Gift Ca Ngày</h3>
+      <div class="sessions"><input type="gift_text" id="inputData" placeholder="Nhập Link Gift muốn lưu"></div>
+      <div class="sessions"><button onclick="accessURL_Thang()">Save Gift Thắng</button></div>
+      <div class="sessions"><button onclick="accessURL_Duong()">Save Gift Dương</button></div>
+      <div class="sessions"><button onclick="accessURL_NhamTheMinh()">Save Gift Nhâm Thế Minh</button></div>
+    </div>
+    <div class="sessions">
+      <h3 style="text-align: center;">Lưu Gift Ca Đêm</h3>
+      <div class="sessions"><input type="gift_text" id="inputData" placeholder="Nhập Link Gift muốn lưu"></div>
+      <div class="sessions"><button onclick="accessURL_Son()">Save Gift Sơn</button></div>
+      <div class="sessions"><button onclick="accessURL_Thao()">Save Gift Thảo</button></div>
+      <div class="sessions"><button onclick="accessURL_NguyenTruongMinh()">Save Gift Nguyễn Trường Minh</button></div>
+    </div>
+
+    </main>
+    <footer style="text-align: center;"> &copy; 2025 - DoanPB - All Rights Reserved.   
+</body>
+</html>
