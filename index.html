@@ -49,38 +49,38 @@
       <div class="sessions"><button onclick="URL_Gift_Dan_A()">Save Gift - Dàn Máy A</button></div>
       <div class="sessions"><button onclick="URL_Gift_Dan_B()">Save Gift - Dàn Máy B</button></div>
       <div class="sessions"><button onclick="URL_Gift_Dan_C()">Save Gift - Dàn Máy C</button></div>
-      <div class="sessions"><button onclick="URL_Gift_DOAN()">Save Gift - Đoàn</button></div>
+      <div class="sessions"><button onclick="accessURL()">Save Gift - Tổng</button></div>
     </div>
     </main>
     <script>
       // Gift Tiktok
-      function URL_Gift_DOAN() {
-          const inputData = document.getElementById("inputData").value; // Lấy giá trị từ input
-          const baseURL = "https://script.google.com/macros/s/AKfycbzdEQaHLPsXqQCJSKgR3D0-DsTDR1vxPQV5iRGxajiaDTBb-UpMruceDdoA74j8Yw4kDQ/exec?"; // URL cơ bản
-          let selectedData = "";
-          // Lấy giá trị từ radio button được chọn (chỉ có một)
-          const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
-          if (radioButtons.length > 0) {
-              selectedData = radioButtons[0].value; // Giá trị của radio button được chọn
-          }
-          // Ghép cả giá trị vào URL với "hoanganh" ở giữa
-          const fullURL = baseURL + encodeURIComponent(selectedData) +'='+ encodeURIComponent(inputData);
-          // Gửi yêu cầu mà không chuyển hướng
-          fetch(fullURL)
-              .then(response => {
-                  if (response.ok) {
-                      return response.text(); // Hoặc response.json() tùy thuộc vào định dạng mà bạn mong đợi
-                  }
-                  throw new Error('Network response was not ok.');
-              })
-              .then(data => {
-                  alert(`Thành công : ${data}`); // Hiển thị dữ liệu nhận được trong thông báo
-              })
-              .catch(error => {
-                  console.error('Có vấn đề với hoạt động fetch:', error);
-                  alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
-              });
-      }
+      function accessURL() {
+    const inputData = document.getElementById("inputData").value; // Lấy giá trị từ input
+    const baseURL = "https://script.google.com/macros/s/AKfycbyN1toeJtrj0aVuluAtHcwO9NkbBo0ZYHcioRDOKwimlKOaa_2jTDkHFv20wMi6lJGQMA/exec?"; // URL cơ bản
+    let selectedData = "";
+    // Lấy giá trị từ radio button được chọn (chỉ có một)
+    const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
+    if (radioButtons.length > 0) {
+        selectedData = radioButtons[0].value; // Giá trị của radio button được chọn
+    }
+    // Ghép cả giá trị vào URL với "hoanganh" ở giữa
+    const fullURL = baseURL + encodeURIComponent(selectedData) +'='+ encodeURIComponent(inputData);
+    // Gửi yêu cầu mà không chuyển hướng
+    fetch(fullURL)
+        .then(response => {
+            if (response.ok) {
+                return response.text(); // Hoặc response.json() tùy thuộc vào định dạng mà bạn mong đợi
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            alert(`Thành công : ${data}`); // Hiển thị dữ liệu nhận được trong thông báo
+        })
+        .catch(error => {
+            console.error('Có vấn đề với hoạt động fetch:', error);
+            alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
+        });
+}
 
       function URL_Gift_Dan_A() {
           const inputData = document.getElementById("inputData").value;
@@ -150,7 +150,6 @@
             alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
         });
 }
-      
     </script>
 
     <footer style="text-align: center; margin: 5px;"> &copy; 2025 - DoanPB - All Rights Reserved.   
