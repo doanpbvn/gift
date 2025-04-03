@@ -18,6 +18,7 @@
         .columns {  background-color: #fff;  display: grid;  align-items: center;  grid-template-columns: repeat(2, 1fr);  padding: 5px 10px;}
         .columns label {  background-color: #fff;  width: calc(100% - 20px);  display: flex;  align-items: center;  gap: 8px;  border: 1px solid #ccc;  margin: 5px;  padding: 5px 10px;}
         .columns input[type="radio"] {  width: 15px;  height: 15px;  accent-color: #007bff;}
+        fieldset {width: calc(100% - 20px);border: 1px dashed #ccc;display: flex;justify-content: center;margin: 15px auto 15px;}
       @media (max-width: 768px) {
         * {margin: 0;padding: 0;  border: 0;  box-sizing: border-box;  font-family: Arial, sans-serif;}
         body {    background: repeating-linear-gradient(        90deg,        rgb(255, 255, 255) 0px, rgb(255, 255, 255) 1px,        rgb(240, 240, 240) 0px, rgb(240, 240, 240) 10px    );}
@@ -56,8 +57,8 @@
           <label><input type="radio" name="data" value="gift_500">Gift 500 </label>
           <label><input type="radio" name="data" value="check_user">Check User</label>
           <label><input type="radio" name="data" value="gift_1000">Gift 1000</label>
-          
         </div>
+        <fieldset><input value="@kaishime.com"><button>Copy Text</button></fieldset>
     </div>
     </main>
     <script>
