@@ -159,6 +159,15 @@
             alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
         });
 }
+
+        document.addEventListener('click', e => {
+    if (e.target.tagName === 'BUTTON') {
+        const input = e.target.previousElementSibling;
+        if (input?.tagName === 'INPUT') {
+            navigator.clipboard.writeText(input.value).catch(console.error);
+        }
+    }
+});
     </script>
 
     <footer style="text-align: center; margin: 5px;"> &copy; 2025 - DoanPB - All Rights Reserved.   
