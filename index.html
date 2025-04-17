@@ -1,198 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="theme-color" content="#06c1db">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>iOS Tool Hub</title>
+    <title>iOS Support - Đoàn</title>
+    <link rel="icon" type="image/png" href="./image/appstore.png">
+    <link rel="stylesheet" href="./main.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
     <style>
-        * {margin: 0;padding: 0;  border: 0;  box-sizing: border-box;  font-family: Arial, sans-serif;}
-        body {
-          background: repeating-linear-gradient(90deg,rgb(255, 255, 255) 0px, rgb(255, 255, 255) 1px,rgb(240, 240, 240) 0px, rgb(240, 240, 240) 10px);
-          max-width: 500px;margin: 10px auto;padding: 0;}
-        button, input, img {border-radius: 0;  }
-        button{  width: calc(100%);  height: 35px;  font-size: 20px;  font-weight: bold;  background-color: rgb(245, 245, 245);  text-align: left;  padding-left: 20px;} 
-        input {  width: 100%;  white-space: nowrap;  overflow: hidden;  padding: 0 10px;  height: 50px;font-size: 16px;}
-        .main {padding: 5px;display: flex;align-items: stretch;}
-        .sessions{  background-color: #fff;  position: relative;  width: calc(100% - 20px);  border: 1px solid #ccc;  margin: 10px auto;  overflow: hidden;  white-space: nowrap;}
-        .columns {  background-color: #fff;  display: grid;  align-items: center;  grid-template-columns: repeat(2, 1fr);  padding: 5px 10px;}
-        .columns label {  background-color: #fff;  width: calc(100% - 20px);  display: flex;  align-items: center;  gap: 8px;  border: 1px solid #ccc;  margin: 5px;  padding: 5px 10px;}
+        #showBtn {display: none; margin: 10px;}
+        body {font-weight: bold;}
+        input{width: calc(100% - 10px); min-height: 50px; display: flex;  border: 1px solid #ccc;  margin: 5px; }
+        button {background-color: #9bffff; width: calc(100% - 10px); min-height: 50px; display: flex; align-items: center; border: 1px solid #ccc;  margin: 5px;font-weight: bold; }
+        .columns label { max-height: 50px; display: flex;  align-items: center;  gap: 8px;  border: 1px solid #ccc;  margin: 5px;  padding: 5px 10px;}
         .columns input[type="radio"] {  width: 15px;  height: 15px;  accent-color: #007bff;}
+        .columns label.active {  background-color: #a5ffad;  border-color: #00ff15;}
         fieldset {width: calc(100% - 20px);border: 1px dashed #ccc;display: flex;justify-content: center;margin: 15px auto 15px;}
-      @media (max-width: 768px) {
-        * {margin: 0;padding: 0;  border: 0;  box-sizing: border-box;  font-family: Arial, sans-serif;}
-        body {    background: repeating-linear-gradient(        90deg,        rgb(255, 255, 255) 0px, rgb(255, 255, 255) 1px,        rgb(240, 240, 240) 0px, rgb(240, 240, 240) 10px    );}
-        button, input, img {border-radius: 0;  }
-        button{  width: calc(100%);  height: 35px;  font-size: 20px;  font-weight: bold;  background-color: rgb(245, 245, 245);  text-align: left;  padding-left: 20px;} 
-        input {  width: 100%;  white-space: nowrap;  overflow: hidden;  padding: 0 10px;  height: 50px;font-size: 16px;}
-        .main {padding: 5px;display: flex;align-items: stretch;}
-        .sessions{  background-color: #fff;  position: relative;  width: calc(100% - 20px);  border: 1px solid #ccc;  margin: 10px auto;  overflow: hidden;  white-space: nowrap;}
-        .columns {  background-color: #fff;  display: grid;  align-items: center;  grid-template-columns: repeat(2, 1fr);  padding: 5px 10px;}
-        .columns label {  background-color: #fff;  width: calc(100% - 20px);  display: flex;  align-items: center;  gap: 8px;  border: 1px solid #ccc;  margin: 5px;  padding: 5px 10px;}
-        .columns input[type="radio"] {  width: 15px;  height: 15px;  accent-color: #007bff;}}
-    </style>
+  </style>
 </head>
 <body>
-  <main>
-    <div class="sessions">
-      <h3 style="text-align: center; padding: 10px;">Lưu Gift Theo Dàn Máy</h3>
-      <div class="sessions"><input type="gift_text" id="inputData" placeholder="Nhập Link Gift muốn lưu"></div>
-        <div class="sessions"><label></label></div>
-                <div class="sessions"><button onclick="accessURL()">Save Gift - Tổng</button></div>
-        <div class="sessions"><label></label></div>
-            <div class="sessions"><button onclick="URL_Gift_Dan_A()">Save Gift - Dàn Máy A</button></div>
-        <div class="sessions"><label></label></div>
-            <div class="sessions"><button onclick="URL_Gift_Dan_B()">Save Gift - Dàn Máy B</button></div>
-        <div class="sessions"><label></label></div>
-      <div class="sessions"><button onclick="URL_Gift_Dan_C()">Save Gift - Dàn Máy C</button></div>
-        <div class="sessions"><label></label></div>
-        <div class="sessions"><label></label></div>
-        <div class="sessions"><label></label></div>
+    <h1 class="rainbow-animated">Lưu Gift</h1>
+    <input type="text" id="inputData" placeholder="Nhập link Gift muốn lưu">
+    <button onclick="sendGiftToSheet('Sheet1')">Lưu Gift - Tổng</button>
+    <button onclick="sendGiftToSheet('Dàn A')">Lưu Gift - Dàn A</button>
+    <button onclick="sendGiftToSheet('Dàn B')">Lưu Gift - Dàn B</button>
+    <button onclick="sendGiftToSheet('Dàn C')">Lưu Gift - Dàn C</button>
+    <div class="columns">
+      <label><input type="radio" name="giftType" value="100" checked>Gift 100</label>
+      <label><input type="radio" name="giftType" value="500">Gift 500</label>
+      <label><input type="radio" name="giftType" value="1000">Gift 1000</label>
+      <label><input type="radio" name="giftType" value="1000">Gift 3000</label>
+      <label><input type="radio" name="giftType" value="Check URL">Check URL</label>
+      <label><input type="radio" name="giftType" value="Check User">Check User</label>
     </div>
-          <div class="sessions">
-      <h2 style="text-align: center; padding: 5px;">Chọn loại gift<p style="font-size: 15px; margin: 5px;text-align: left;">Chọn loại gift</p></h2>
-        <div class="columns">
-          <label><input type="radio" name="data" value="gift_100" checked="">Gift 100</label><!-- Mặc định chọn -->
-          <label><input type="radio" name="data" value="check_URL">Check URL</label>
-          <label><input type="radio" name="data" value="gift_500">Gift 500 </label>
-          <label><input type="radio" name="data" value="check_user">Check User</label>
-          <label><input type="radio" name="data" value="gift_1000">Gift 1000</label>
-        </div>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="@kaishime.com"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="adrianmunoz99@icloud.com Mnbv321321@"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="lumpocoal333.ca@icloud.com Mnbv321321@"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="jillpapuette1961@icloud.com Mnbv321321@"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="hengyingfen96@icloud.com Mnbv321321@"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="aaron.long1979@icloud.com Mnbv321321"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-        <fieldset><input value="109.123.229.197 11324 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 11325 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 11326 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12949 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12984 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12985 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12986 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12987 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12988 cuongddcom 888888"><button>Copy Text</button></fieldset>
-        <fieldset><input value="109.123.229.197 12989 cuongddcom 888888"><button>Copy Text</button></fieldset>
-                      <div class="sessions"><label></label></div>
-    </div>
-    </main>
-    <script>
-      // Gift Tiktok
-      function accessURL() {
-    const inputData = document.getElementById("inputData").value; // Lấy giá trị từ input
-    const baseURL = "https://script.google.com/macros/s/AKfycbyN1toeJtrj0aVuluAtHcwO9NkbBo0ZYHcioRDOKwimlKOaa_2jTDkHFv20wMi6lJGQMA/exec?"; // URL cơ bản
-    let selectedData = "";
-    // Lấy giá trị từ radio button được chọn (chỉ có một)
-    const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
-    if (radioButtons.length > 0) {
-        selectedData = radioButtons[0].value; // Giá trị của radio button được chọn
+  <div style="margin: 10px;" id="qrcode"></div>
+  <footer>&copy; 2025 - DoanPB - All Rights Reserved.</footer>
+
+<script>
+  var qrText = "https://doanpbvn.github.io/ios";
+  new QRCode(document.getElementById("qrcode"), qrText);
+
+  const radios = document.querySelectorAll('.columns input[type="radio"]');
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      radios.forEach(r => r.parentElement.classList.remove('active'));
+      radio.parentElement.classList.add('active');
+    });
+  });
+
+  let isSubmitting = false;
+
+  function sendGiftToSheet(sheetName) {
+    if (isSubmitting) {
+      alert("Đang tiến hành gửi, Bấm OK !");
+      return;
     }
-    // Ghép cả giá trị vào URL với "hoanganh" ở giữa
-    const fullURL = baseURL + encodeURIComponent(selectedData) +'='+ encodeURIComponent(inputData);
-    // Gửi yêu cầu mà không chuyển hướng
+
+    const inputData = document.getElementById("inputData").value.trim();
+    const selectedType = document.querySelector('input[name="giftType"]:checked')?.value;
+    if (!inputData) return alert("Vui lòng nhập link gift");
+    if (!selectedType) return alert("Vui lòng chọn loại gift");
+
+    isSubmitting = true;
+    setTimeout(() => {
+      isSubmitting = false;
+    }, 5000);
+
+    const params = new URLSearchParams({
+      sheet: sheetName,
+      type: selectedType,
+      link: inputData
+    });
+    const fullURL = "https://script.google.com/macros/s/AKfycbxBduMz54Rd-3c1Pvz8k5AdEvXHF-JyVJF3dGKHeCfdYuor3SeS1du6teBmYBzcKPaPSQ/exec?" + params.toString();
+
     fetch(fullURL)
-        .then(response => {
-            if (response.ok) {
-                return response.text(); // Hoặc response.json() tùy thuộc vào định dạng mà bạn mong đợi
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            alert(`Thành công : ${data}`); // Hiển thị dữ liệu nhận được trong thông báo
-        })
-        .catch(error => {
-            console.error('Có vấn đề với hoạt động fetch:', error);
-            alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
-        });
-}
+      .then(res => res.ok ? res.text() : Promise.reject('Fetch lỗi'))
+      .then(data => {
+        alert(`✅ Lưu Thành Công ${data}`);
+        location.reload();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Có lỗi xảy ra, vui lòng thử lại!");
+      });
+  }
+</script>
 
-      function URL_Gift_Dan_A() {
-          const inputData = document.getElementById("inputData").value;
-          const baseURL = "https://script.google.com/macros/s/AKfycbwFcdbgkLIIaI13VedfqGtSHsUTEGcLN6_4FMyjswwmRWlaJyXbnHpHILNUZsoGDbab/exec?";
-          let selectedData = "";
-          const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
-          if (radioButtons.length > 0) {selectedData = radioButtons[0].value;}
-          const fullURL = baseURL + encodeURIComponent(selectedData) +'='+ encodeURIComponent(inputData);
-          fetch(fullURL)
-              .then(response => {if (response.ok) {return response.text();}throw new Error('Network response was not ok.');})
-              .then(data => {alert(`Thành công : ${data}`);})
-              .catch(error => {console.error('Có vấn đề với hoạt động fetch:', error);alert('Có lỗi xảy ra, vui lòng thử lại!'); });
-      }
-
-      function URL_Gift_Dan_B() {
-          const inputData = document.getElementById("inputData").value; // Lấy giá trị từ input
-          const baseURL = "https://script.google.com/macros/s/AKfycbxfNzz_UwNQh8ZMlYMuBwGd-Frq3ju72ZbKOMNa5LMWdc1Hm0uHTYXDIpmhqXCk1kil/exec?"; // URL cơ bản
-          let selectedData = "";
-          // Lấy giá trị từ radio button được chọn (chỉ có một)
-          const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
-          if (radioButtons.length > 0) {
-              selectedData = radioButtons[0].value; // Giá trị của radio button được chọn
-          }
-          // Ghép cả giá trị vào URL với "hoanganh" ở giữa
-          const fullURL = baseURL + encodeURIComponent(selectedData) +'='+ encodeURIComponent(inputData);
-          // Gửi yêu cầu mà không chuyển hướng
-          fetch(fullURL)
-              .then(response => {
-                  if (response.ok) {
-                      return response.text(); // Hoặc response.json() tùy thuộc vào định dạng mà bạn mong đợi
-                  }
-                  throw new Error('Network response was not ok.');
-              })
-              .then(data => {
-                  alert(`Thành công : ${data}`); // Hiển thị dữ liệu nhận được trong thông báo
-              })
-              .catch(error => {
-                  console.error('Có vấn đề với hoạt động fetch:', error);
-                  alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
-              });
-      }
-
-      function URL_Gift_Dan_C() {
-    const inputData = document.getElementById("inputData").value; // Lấy giá trị từ input
-    const baseURL = "https://script.google.com/macros/s/AKfycbwYcyQS_YfFgBDnN2ROync_wUuoLgge9lDarRzesKHw-2y6o7C1f0mNvihe7pA5IyhLIg/exec?"; // URL cơ bản
-    let selectedData = "";
-    // Lấy giá trị từ radio button được chọn (chỉ có một)
-    const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
-    if (radioButtons.length > 0) {
-        selectedData = radioButtons[0].value; // Giá trị của radio button được chọn
-    }
-    // Ghép cả giá trị vào URL với "hoanganh" ở giữa
-    const fullURL = baseURL + encodeURIComponent(selectedData) +'='+ encodeURIComponent(inputData);
-    // Gửi yêu cầu mà không chuyển hướng
-    fetch(fullURL)
-        .then(response => {
-            if (response.ok) {
-                return response.text(); // Hoặc response.json() tùy thuộc vào định dạng mà bạn mong đợi
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            alert(`Thành công : ${data}`); // Hiển thị dữ liệu nhận được trong thông báo
-        })
-        .catch(error => {
-            console.error('Có vấn đề với hoạt động fetch:', error);
-            alert('Có lỗi xảy ra, vui lòng thử lại!'); // Thông báo khi có lỗi
-        });
-}
-
-        document.addEventListener('click', e => {
-    if (e.target.tagName === 'BUTTON') {
-        const input = e.target.previousElementSibling;
-        if (input?.tagName === 'INPUT') {
-            navigator.clipboard.writeText(input.value).catch(console.error);
-        }
-    }
-});
-    </script>
-
-    <footer style="text-align: center; margin: 5px;"> &copy; 2025 - DoanPB - All Rights Reserved.   
 </body>
 </html>
