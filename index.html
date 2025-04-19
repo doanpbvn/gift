@@ -20,20 +20,24 @@
   </style>
 </head>
 <body>
-    <h1 class="rainbow-animated">Lưu Gift</h1>
-    <input type="text" id="inputData" placeholder="Nhập link Gift muốn lưu">
-    <button onclick="sendGiftToSheet('Sheet1')">Lưu Gift - Tổng</button>
-    <button onclick="sendGiftToSheet('Dàn A')">Lưu Gift - Dàn A</button>
-    <button onclick="sendGiftToSheet('Dàn B')">Lưu Gift - Dàn B</button>
-    <button onclick="sendGiftToSheet('Dàn C')">Lưu Gift - Dàn C</button>
-    <div class="columns">
-      <label><input type="radio" name="giftType" value="100" checked>Gift 100</label>
-      <label><input type="radio" name="giftType" value="500">Gift 500</label>
-      <label><input type="radio" name="giftType" value="1000">Gift 1000</label>
-      <label><input type="radio" name="giftType" value="1000">Gift 3000</label>
-      <label><input type="radio" name="giftType" value="Check URL">Check URL</label>
-      <label><input type="radio" name="giftType" value="Check User">Check User</label>
-    </div>
+  <h1 class="rainbow-animated">Lưu Gift</h1>
+  <input type="text" id="inputData" placeholder="Nhập link Gift muốn lưu">
+  <button onclick="sendGiftToSheet('Sheet1')">Lưu Gift - Tổng</button>
+  <button onclick="sendGiftToSheet('Dàn A')">Lưu Gift - Dàn A</button>
+  <button onclick="sendGiftToSheet('Dàn B')">Lưu Gift - Dàn B</button>
+  <button onclick="sendGiftToSheet('Dàn C')">Lưu Gift - Dàn C</button>
+  <div class="columns">
+    <label><input type="radio" name="giftType" value="100" checked>Gift 100</label>
+    <label><input type="radio" name="giftType" value="500">Gift 500</label>
+    <label><input type="radio" name="giftType" value="1000">Gift 1000</label>
+    <label><input type="radio" name="giftType" value="1000">Gift 3000</label>
+    <label><input type="radio" name="giftType" value="Check URL">Check URL</label>
+    <label><input type="radio" name="giftType" value="Check User">Check User</label>
+  </div>
+
+  <div class="title" style="background-color: #9bffff;padding: 10px;" id="randomDNS">IP sẽ hiển thị ở đây</div>
+  <button class="btn" onclick="copyToClipboard()">Copy Random DNS</button>
+  
   <div style="margin: 10px;" id="qrcode"></div>
   <footer>&copy; 2025 - DoanPB - All Rights Reserved.</footer>
 
@@ -85,6 +89,57 @@
         alert("❌ Có lỗi xảy ra, vui lòng thử lại!");
       });
   }
+  let ipList = [];
+
+        async function fetchDNSList() {
+            const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://public-dns.info/nameserver/jp.html");
+            const displayElement = document.getElementById("randomDNS");
+
+            try {
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, "text/html");
+                const rows = doc.querySelectorAll("table tbody tr");
+                const ipRegex = /^(?:\d{1,3}\.){3}\d{1,3}$/; // Regex for valid IPv4 addresses
+                ipList = Array.from(rows)
+                    .map(row => row.querySelector("td").textContent.trim())
+                    .filter(ip => ipRegex.test(ip)); // Filter only valid IPs
+
+                if (ipList.length > 0) {
+                    setRandomIP();
+                } else {
+                    displayElement.textContent = "No valid IP addresses found.";
+                }
+            } catch (error) {
+                console.error("Error fetching DNS list:", error);
+                displayElement.textContent = "Error loading DNS data.";
+            }
+        }
+        function setRandomIP() {
+            if (ipList.length > 0) {
+                const randomIP = ipList[Math.floor(Math.random() * ipList.length)];
+                document.getElementById("randomDNS").textContent = randomIP;
+                return randomIP;
+            }
+            return null;
+        }
+        function copyToClipboard() {
+            const ip = document.getElementById("randomDNS").textContent;
+            if (ip && ip !== "Error loading DNS data." && ip !== "No valid IP addresses found.") {
+                navigator.clipboard.writeText(ip).then(() => {
+                    alert("Copied to clipboard: " + ip);
+                    setRandomIP(); // Change to a new random IP after copying
+                }).catch((error) => {
+                    alert("Failed to copy: " + error);
+                });
+            } else {
+                alert("No valid IP address to copy.");
+            }
+        }
+
+        // Load the DNS list on page load
+        window.onload = fetchDNSList;
 </script>
 
 </body>
